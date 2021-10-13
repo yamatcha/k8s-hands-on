@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/yamatcha/k8s-hands-on.git
-    targetRevision: main
+    targetRevision: add-status-to-crdmanifest
     path: manifests/monitoring
   destination:
     server: https://kubernetes.default.svc
