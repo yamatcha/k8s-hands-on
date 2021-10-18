@@ -11,3 +11,4 @@ resources:
   - prometheus-adapter.yaml
   - todo.yaml
   - victoriametrics.yaml
+  - contour.yaml
