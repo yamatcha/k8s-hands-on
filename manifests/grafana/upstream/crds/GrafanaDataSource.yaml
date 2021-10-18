@@ -3,6 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   name: grafanadatasources.integreatly.org
 spec:
+  preserveUnknownFields: true
   group: integreatly.org
   names:
     kind: GrafanaDataSource
