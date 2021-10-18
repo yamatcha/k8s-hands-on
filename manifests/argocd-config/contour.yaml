@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: contour
+  namespace: projectcontour
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/yamatcha/k8s-hands-on.git
+    targetRevision: add-status-to-crdmanifest
+    path: manifests/contour
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: projectcontour

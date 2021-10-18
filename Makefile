@@ -2,6 +2,7 @@ KUBERNETES_VERSION := 1.21.1
 KIND_VERSION := 0.11.0
 KUSTOMIZE_VERSION := 4.1.2
 ARGOCD_VERSION := 2.0.2
+CONTOUR_VERSION := 1.19
 VM_OPERATOR_VERSION := 0.14.2
 GRAFANA_OPERATOR_VERSION := 3.10.1
 KUBE_STATE_METRICS_VERSION := 2.0.0
@@ -42,6 +43,12 @@ deploy-argocd: $(KUBECTL) $(KUSTOMIZE) ## Deploy ArgoCD on Kubernetes cluster
 	sleep 5
 	$(KUBECTL) wait pod --all -n argocd --for condition=Ready --timeout 180s
 	$(KUBECTL) -n argocd apply -f manifests/argocd-config/argocd-config.yaml
+
+.PHONY: deploy-contour
+deploy-contour: $(KUBECTL) $(KUSTOMIZE) ## Deploy Contour on Kubernetes cluster
+	$(KUBECTL) apply -f ./manifests/contour/upstream.yaml
+	sleep 5
+	$(KUBECTL) wait pod --all -n projectcontour --for condition=Ready --timeout 180s
 
 .PHONY: deploy-grafana
 deploy-grafana: $(KUBECTL) $(KUSTOMIZE) ## Deploy Grafana on Kubernetes cluster
@@ -177,12 +184,17 @@ $(LOGCLI): ## Install logcli
 	mv $(BINDIR)/logcli-$(OS)-$(ARCH) $(LOGCLI)
 	rm -f /tmp/logcli.zip
 
+## Update manifests
 .PHONY: update-argocd
 update-argocd:
 	rm -rf manifests/argocd/upstream.yaml
 	curl -sSLf https://raw.githubusercontent.com/argoproj/argo-cd/v$(ARGOCD_VERSION)/manifests/install.yaml -o manifests/argocd/upstream.yaml
 
-## Update manifests
+.PHONY: update-contour
+update-contour:
+	rm -rf manifests/contour/upstream.yaml
+	curl -sSLf https://raw.githubusercontent.com/projectcontour/contour/release-$(CONTOUR_VERSION)/examples/render/contour.yaml -o manifests/contour/upstream.yaml
+
 .PHONY: update-vm-operator
 update-vm-operator:
 	rm -rf manifests/victoriametrics/release
