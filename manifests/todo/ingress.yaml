@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo
+  labels:
+    app: todo
+spec:
+  defaultBackend:
+    service:
+      name: todo
+      port:
+        number: 80
