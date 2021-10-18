@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: todo
   labels:
-    app: todo
+    app.kubernetes.io/name: todo
 spec:
   defaultBackend:
     service:
