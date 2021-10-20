@@ -197,7 +197,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.6.0
-  creationTimestamp: null
+  creationTimestamp: '1999-01-01T01:01:01Z'
   name: contourconfigurations.projectcontour.io
 spec:
   preserveUnknownFields: false
